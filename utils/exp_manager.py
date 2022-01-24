@@ -44,6 +44,9 @@ from utils.callbacks import SaveVecNormalizeCallback, TrialEvalCallback
 from utils.hyperparams_opt import HYPERPARAMS_SAMPLER
 from utils.utils import ALGOS, get_callback_list, get_latest_run_id, get_wrapper_class, linear_schedule
 
+# Integration with wandb
+from wandb.integration.sb3 import WandbCallback
+
 
 class ExperimentManager(object):
     """
@@ -108,7 +111,7 @@ class ExperimentManager(object):
 
         # Callbacks
         self.specified_callbacks = []
-        self.callbacks = []
+        self.callbacks = [WandbCallback()]
         self.save_freq = save_freq
         self.eval_freq = eval_freq
         self.n_eval_episodes = n_eval_episodes

@@ -14,8 +14,10 @@ from stable_baselines3.common.utils import set_random_seed
 import utils.import_envs  # noqa: F401 pytype: disable=import-error
 from utils.exp_manager import ExperimentManager
 from utils.utils import ALGOS, StoreDict
+import wandb
 
 seaborn.set()
+
 
 if __name__ == "__main__":  # noqa: C901
     parser = argparse.ArgumentParser()
@@ -153,6 +155,15 @@ if __name__ == "__main__":  # noqa: C901
     print("=" * 10, env_id, "=" * 10)
     print(f"Seed: {args.seed}")
 
+
+    run = wandb.init(
+        project="research-rl",
+        config=vars(args),
+        sync_tensorboard=True,  # auto-upload sb3's tensorboard metrics
+        monitor_gym=True,  # auto-upload the videos of agents playing the game
+        save_code=True,  # optional
+    )
+
     exp_manager = ExperimentManager(
         args,
         args.algo,
@@ -196,3 +207,5 @@ if __name__ == "__main__":  # noqa: C901
         exp_manager.save_trained_model(model)
     else:
         exp_manager.hyperparameters_optimization()
+
+    run.finish()
