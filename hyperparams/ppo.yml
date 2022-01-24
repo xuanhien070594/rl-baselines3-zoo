@@ -42,6 +42,44 @@ CartPole-v1:
   learning_rate: lin_0.001
   clip_range: lin_0.2
 
+# Tuned
+CartPole-Softwalls-v1:
+  n_envs: 8
+  n_timesteps: !!float 1e5
+  policy: 'MlpPolicy'
+  n_steps: 512
+  batch_size: 128
+  gae_lambda: 0.99
+  gamma: 0.99
+  n_epochs: 10
+  ent_coef: 0.006631842710100934
+  learning_rate: lin_0.001306991252567132
+  clip_range: lin_0.2
+  vf_coef: 0.6003419776313492
+  max_grad_norm: 0.5
+  policy_kwargs: "dict(activation_fn=nn.Tanh,
+                       net_arch=[dict(pi=[64, 64], vf=[64, 64])]
+                       )"
+
+# Tuned
+CartPole-Softwalls-v0:
+  n_envs: 8
+  n_timesteps: !!float 1e5
+  policy: 'MlpPolicy'
+  n_steps: 32
+  batch_size: 8
+  gae_lambda: 0.8
+  gamma: 0.995
+  n_epochs: 10
+  ent_coef: 0.0004991569893399347
+  learning_rate: lin_6.437512735896649e-05
+  clip_range: lin_0.4
+  vf_coef: 0.273926143831374
+  max_grad_norm: 5
+  policy_kwargs: "dict(activation_fn=nn.Tanh,
+                       net_arch=[dict(pi=[64, 64], vf=[64, 64])]
+                       )"
+
 MountainCar-v0:
   normalize: true
   n_envs: 16

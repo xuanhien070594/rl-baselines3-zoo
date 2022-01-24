@@ -5,9 +5,54 @@ MountainCarContinuous-v0:
   noise_type: 'ornstein-uhlenbeck'
   noise_std: 0.5
 
-Pendulum-v0:
-  n_timesteps: 20000
+CartPole-Softwalls-v1:
+  n_timesteps: 200000
   policy: 'MlpPolicy'
+  gamma: 0.98
+  buffer_size: 200000
+  learning_starts: 10000
+  noise_type: 'normal'
+  noise_std: 0.1
+  gradient_steps: -1
+  batch_size: 256
+  tau: 0.005
+  train_freq: [1, "episode"]
+  learning_rate: !!float 1e-3
+  policy_kwargs: "dict(net_arch=[400, 300])"
+
+CartPole-Softwalls-v0:
+  n_timesteps: 200000
+  policy: 'MlpPolicy'
+  gamma: 0.98
+  buffer_size: 200000
+  learning_starts: 10000
+  noise_type: 'normal'
+  noise_std: 0.1
+  gradient_steps: -1
+  batch_size: 256
+  tau: 0.005
+  train_freq: [1, "episode"]
+  learning_rate: !!float 1e-3
+  policy_kwargs: "dict(net_arch=[400, 300])"
+
+CartPole-continuous-input-v0:
+  n_timesteps: 200000
+  policy: 'MlpPolicy'
+  gamma: 0.999
+  buffer_size: 100000
+  learning_starts: 10000
+  noise_type: 'normal'
+  noise_std: 0.3502860017001225
+  gradient_steps: -1
+  batch_size: 256
+  tau: 0.05
+  train_freq: 128
+  learning_rate: !!float 0.0008949771423406326
+  policy_kwargs: "dict(net_arch=[400, 300])"
+
+pendulum-v0:
+  n_timesteps: 20000
+  policy: 'mlppolicy'
   gamma: 0.98
   buffer_size: 200000
   learning_starts: 10000
