@@ -159,7 +159,7 @@ if __name__ == "__main__":  # noqa: C901
     run = wandb.init(
         project="research-rl",
         config=vars(args),
-        sync_tensorboard=True,  # auto-upload sb3's tensorboard metrics
+        sync_tensorboard=False,  # auto-upload sb3's tensorboard metrics
         monitor_gym=True,  # auto-upload the videos of agents playing the game
         save_code=True,  # optional
     )
