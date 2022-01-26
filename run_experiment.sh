@@ -3,7 +3,7 @@
 #SBATCH --mem-per-gpu=10G
 #SBATCH --cpus-per-gpu=4
 #SBATCH --gpus=1
-#SBATCH --time=2:00:00
+#SBATCH --time=24:00:00
 #SBATCH --partition=compute
 
 source /scratch/hien/venvs/rl_contacts_env/bin/activate
