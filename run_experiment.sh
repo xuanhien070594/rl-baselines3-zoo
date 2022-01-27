@@ -19,7 +19,7 @@ TUNING_NO_STEP=200000
 TUNING_NO_TRIALS=1000
 TUNING_SAMPLER=tpe
 TUNING_PRUNER=median
-TUNING_PATH=/scratch/hien/rl-baselines3-zoo/$ALGO
+TUNING_PATH=/scratch/hien/rl-baselines3-zoo/logs/$ALGO
 
 if $TUNING
 then
