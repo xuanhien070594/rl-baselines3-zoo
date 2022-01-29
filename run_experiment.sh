@@ -4,6 +4,7 @@
 #SBATCH --cpus-per-gpu=4
 #SBATCH --gpus=1
 #SBATCH --time=24:00:00
+#SBATCH --qos=posa-high
 #SBATCH --partition=posa-compute
 
 source /scratch/hien/venvs/rl_contacts_env/bin/activate
