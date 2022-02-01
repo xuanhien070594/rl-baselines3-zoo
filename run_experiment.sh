@@ -3,7 +3,7 @@
 #SBATCH --mem-per-gpu=10G
 #SBATCH --cpus-per-gpu=4
 #SBATCH --gpus=1
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH --qos=posa-high
 #SBATCH --partition=posa-compute
 
@@ -13,6 +13,7 @@ cd /scratch/hien/rl-baselines3-zoo
 ALGO=td3
 ENV=CartPole-Softwalls-v1
 TRAIN_NO_STEP=500000
+NO_TRAINING_SESSIONS=10
 TENSORBOARD_LOG_DIR=/scratch/hien/tensorboard_log
 
 TUNING=true
@@ -25,7 +26,10 @@ if $TUNING
 then
     python train.py --algo $ALGO --env $ENV -n $TUNING_NO_STEP -optimize --n-trials $TUNING_NO_TRIALS --sampler $TUNING_SAMPLER --pruner $TUNING_PRUNER
 else
-    python train.py --algo $ALGO --env $ENV -n $TUNING_NO_STEP --tensorboard-log $TENSORBOARD_LOG_DIR
+    for i in {1..$NO_TRAINING_SESSIONS}
+    do
+    	python train.py --algo $ALGO --env $ENV -n $TRAINING_NO_STEP --tensorboard-log $TENSORBOARD_LOG_DIR
+    done
 fi
 
 exit 0

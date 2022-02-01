@@ -218,7 +218,7 @@ def sample_td3_params(trial: optuna.Trial) -> Dict[str, Any]:
     train_freq = trial.suggest_categorical("train_freq", [1, 4, 8, 16, 32, 64, 128, 256, 512])
     gradient_steps = train_freq
 
-    noise_type = trial.suggest_categorical("noise_type", ["ornstein-uhlenbeck", "normal", None])
+    noise_type = trial.suggest_categorical("noise_type", ["ornstein-uhlenbeck", "normal"])
     noise_std = trial.suggest_uniform("noise_std", 0, 1)
 
     # NOTE: Add "verybig" to net_arch when tuning HER
