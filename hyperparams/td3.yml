@@ -20,18 +20,34 @@ MountainCarContinuous-v0:
 #   learning_rate: !!float 1e-3
 #   policy_kwargs: "dict(net_arch=[400, 300])"
 
-# Tuned
+# # Tuned
+# CartPole-Softwalls-v1:
+#   n_timesteps: 200000
+#   policy: 'MlpPolicy'
+#   gamma: 0.99
+#   buffer_size: 100000
+#   learning_starts: 0
+#   gradient_steps: 8
+#   batch_size: 1024
+#   tau: 0.02
+#   train_freq: 8
+#   learning_rate: !!float 0.0012468677986859026 
+#   policy_kwargs: "dict(net_arch=[64, 64])"
+
+# Tuned 01/31/2022
 CartPole-Softwalls-v1:
   n_timesteps: 200000
   policy: 'MlpPolicy'
-  gamma: 0.99
-  buffer_size: 100000
+  gamma: 0.999
+  buffer_size: 1000000
   learning_starts: 0
-  gradient_steps: 8
+  gradient_steps: 64
   batch_size: 1024
-  tau: 0.02
-  train_freq: 8
-  learning_rate: !!float 0.0012468677986859026 
+  noise_type: 'normal'
+  noise_std: 0.6990451822
+  tau: 0.08
+  train_freq: 64
+  learning_rate: !!float 0.001467701779 
   policy_kwargs: "dict(net_arch=[64, 64])"
 
 # CartPole-Softwalls-v0:
@@ -49,19 +65,35 @@ CartPole-Softwalls-v1:
 #   learning_rate: !!float 1e-3
 #   policy_kwargs: "dict(net_arch=[400, 300])"
 
-# Tuned
+# # Tuned
+# CartPole-Softwalls-v0:
+#   n_timesteps: 200000
+#   policy: 'MlpPolicy'
+#   gamma: 0.999
+#   buffer_size: 1000000
+#   learning_starts: 0
+#   gradient_steps: 16
+#   batch_size: 1024
+#   tau: 0.02
+#   train_freq: 16
+#   learning_rate: !!float 0.004688938037888374
+#   policy_kwargs: "dict(net_arch=[64, 64])"
+
+# Tuned 01/31/2022
 CartPole-Softwalls-v0:
   n_timesteps: 200000
   policy: 'MlpPolicy'
-  gamma: 0.999
+  gamma: 0.995
   buffer_size: 1000000
   learning_starts: 0
-  gradient_steps: 16
+  gradient_steps: 4
   batch_size: 1024
+  noise_type: 'normal'
+  noise_std: 0.7105764619
   tau: 0.02
-  train_freq: 16
-  learning_rate: !!float 0.004688938037888374 
-  policy_kwargs: "dict(net_arch=[64, 64])"
+  train_freq: 4
+  learning_rate: !!float 0.0006927145033
+  policy_kwargs: "dict(net_arch=[256, 256])"
 
 CartPole-continuous-input-v0:
   n_timesteps: 200000
