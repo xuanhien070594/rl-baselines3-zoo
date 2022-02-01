@@ -28,7 +28,7 @@ then
 else
     for i in {1..$NO_TRAINING_SESSIONS}
     do
-    	python train.py --algo $ALGO --env $ENV -n $TRAINING_NO_STEP --tensorboard-log $TENSORBOARD_LOG_DIR
+    	python train.py --algo $ALGO --env $ENV -n $TRAIN_NO_STEP --tensorboard-log $TENSORBOARD_LOG_DIR
     done
 fi
 
