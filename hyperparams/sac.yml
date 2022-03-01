@@ -36,6 +36,75 @@ LunarLanderContinuous-v2:
   learning_starts: 10000
   policy_kwargs: "dict(net_arch=[400, 300])"
 
+# Tuned
+CartPole-Softwalls-v1:
+  n_timesteps: !!float 5e5
+  policy: 'MlpPolicy'
+  learning_rate: !!float 0.00033004157641881084
+  buffer_size: 100000
+  batch_size: 512
+  ent_coef: 'auto'
+  gamma: 0.99
+  tau: 0.01
+  train_freq: 256
+  gradient_steps: 256
+  learning_starts: 0
+  use_sde: True
+  policy_kwargs: "dict(log_std_init=-0.11433686991198849, net_arch=[256, 256])"
+
+# Tuned
+CartPole-Softwalls-v0:
+  n_timesteps: !!float 5e5
+  policy: 'MlpPolicy'
+  learning_rate: !!float 1.63115534568449e-05
+  buffer_size: 1000000
+  batch_size: 2048
+  ent_coef: 'auto'
+  gamma: 0.98
+  tau: 0.08
+  train_freq: 8
+  gradient_steps: 8
+  learning_starts: 1000
+  use_sde: True
+  policy_kwargs: "dict(log_std_init=-3.2876566548731, net_arch=[400, 300])"
+
+# Not tuned yet
+Box-Pushing-with-Arm-v0:
+  n_timesteps: !!float 1e6
+  policy: 'MlpPolicy'
+  learning_rate: !!float 0.00033004157641881084
+  buffer_size: 100000
+  batch_size: 512
+  ent_coef: 'auto'
+  gamma: 0.99
+  tau: 0.01
+  train_freq: 256
+  gradient_steps: 256
+  learning_starts: 0
+  use_sde: True
+  policy_kwargs: "dict(log_std_init=-0.11433686991198849, net_arch=[256, 256])"
+
+# Not tuned yet
+Box-Pushing-with-Arm-HER-v0:
+  n_timesteps: !!float 1e6
+  policy: 'MultiInputPolicy'
+  learning_rate: !!float 0.00033004157641881084
+  buffer_size: 100000
+  batch_size: 512
+  ent_coef: 'auto'
+  gamma: 0.99
+  tau: 0.01
+  train_freq: 256
+  gradient_steps: 256
+  learning_starts: 0
+  use_sde: True
+  replay_buffer_class: HerReplayBuffer
+  replay_buffer_kwargs: "dict(
+    online_sampling=True,
+    goal_selection_strategy='future',
+    n_sampled_goal=4
+  )"
+  policy_kwargs: "dict(log_std_init=-0.11433686991198849, net_arch=[256, 256])"
 
 # Tuned
 BipedalWalker-v3:

@@ -200,12 +200,24 @@ FetchPush-v1: &her-defaults
   )"
   policy_kwargs: "dict(net_arch=[512, 512, 512], n_critics=2)"
 
+FetchPushDense-v1:
+  <<: *her-defaults
+  n_timesteps: !!float 1e6
+
+FetchPushForces-v1:
+  <<: *her-defaults
+  n_timesteps: !!float 1e6
+
 FetchSlide-v1:
   <<: *her-defaults
   n_timesteps: !!float 3e6
 
 FetchPickAndPlace-v1:
   <<: *her-defaults
+
+Box-Pushing-with-Arm-HER-v0:
+  <<: *her-defaults
+  n_timesteps: !!float 1e6
 
 PandaReach-v1:
   env_wrapper: sb3_contrib.common.wrappers.TimeFeatureWrapper
@@ -254,3 +266,7 @@ parking-v0:
     n_sampled_goal=4,
     max_episode_length=100
   )"
+
+# === Custom Envs ===
+Box-Pushing-with-Arm-HER-v0:
+  <<: *her-defaults
