@@ -1,3 +1,4 @@
+import glob
 import os
 import subprocess
 
@@ -22,13 +23,13 @@ for algo in ALGOS:
         experiments[f"{algo}-{env_id}"] = (algo, env_id)
 
 # Test for SAC
-experiments["sac-Pendulum-v0"] = ("sac", "Pendulum-v0")
+experiments["sac-Pendulum-v1"] = ("sac", "Pendulum-v1")
 # Test for TD3
-experiments["td3-Pendulum-v0"] = ("td3", "Pendulum-v0")
+experiments["td3-Pendulum-v1"] = ("td3", "Pendulum-v1")
 # Test for HER
 experiments["tqc-parking-v0"] = ("tqc", "parking-v0")
 # Test for TQC
-experiments["tqc-Pendulum-v0"] = ("tqc", "Pendulum-v0")
+experiments["tqc-Pendulum-v1"] = ("tqc", "Pendulum-v1")
 
 
 @pytest.mark.parametrize("sampler", ["random", "tpe"])
@@ -103,3 +104,19 @@ def test_optimize_log_path(tmp_path):
     # Log folder of the first trial
     assert os.path.isdir(os.path.join(optimization_log_path, "trial_1"))
     assert os.path.isfile(os.path.join(optimization_log_path, "trial_1", "evaluations.npz"))
+
+    study_path = list(glob.glob(str(tmp_path / algo / "report_*.pkl")))[0]
+    print(study_path)
+    # Test reading best trials
+    args = [
+        "-i",
+        study_path,
+        "--print-n-best-trials",
+        str(N_TRIALS),
+        "--save-n-best-hyperparameters",
+        str(N_TRIALS),
+        "-f",
+        str(tmp_path / "best_hyperparameters"),
+    ]
+    return_code = subprocess.call(["python", "scripts/parse_study.py"] + args)
+    _assert_eq(return_code, 0)

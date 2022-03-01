@@ -4,7 +4,7 @@
 
 # RL Baselines3 Zoo: A Training Framework for Stable Baselines3 Reinforcement Learning Agents
 
-<img src="images/panda_pick.gif" align="right" width="35%"/>
+<img src="images/car.jpg" align="right" width="40%"/>
 
 RL Baselines3 Zoo is a training framework for Reinforcement Learning (RL), using [Stable Baselines3](https://github.com/DLR-RM/stable-baselines3).
 
@@ -55,7 +55,7 @@ python train.py --algo a2c --env BreakoutNoFrameskip-v4 -i rl-trained-agents/a2c
 
 When using off-policy algorithms, you can also save the replay buffer after training:
 ```
-python train.py --algo sac --env Pendulum-v0 --save-replay-buffer
+python train.py --algo sac --env Pendulum-v1 --save-replay-buffer
 ```
 It will be automatically loaded if present when continuing training.
 
@@ -167,8 +167,7 @@ Not all hyperparameters are tuned, and tuning enforces certain default hyperpara
 
 Hyperparameters not specified in [utils/hyperparams_opt.py](https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/utils/hyperparams_opt.py) are taken from the associated YAML file and fallback to the default values of SB3 if not present.
 
-Note: hyperparameters search is not implemented for DQN for now.
-when using SuccessiveHalvingPruner ("halving"), you must specify `--n-jobs > 1`
+Note: when using SuccessiveHalvingPruner ("halving"), you must specify `--n-jobs > 1`
 
 Budget of 1000 trials with a maximum of 50000 steps:
 
@@ -180,6 +179,11 @@ python train.py --algo ppo --env MountainCar-v0 -n 50000 -optimize --n-trials 10
 Distributed optimization using a shared database is also possible (see the corresponding [Optuna documentation](https://optuna.readthedocs.io/en/stable/tutorial/10_key_features/004_distributed.html)):
 ```
 python train.py --algo ppo --env MountainCar-v0 -optimize --study-name test --storage sqlite:///example.db
+```
+
+Print and save best hyperparameters of an Optuna study:
+```
+python scripts/parse_study.py -i path/to/study.pkl --print-n-best-trials 10 --save-n-best-hyperparameters 10
 ```
 
 ### Hyperparameters search space
@@ -287,7 +291,7 @@ The previous command will create a `mp4` file. To convert this file to `gif` for
 python -m utils.record_training --algo ppo --env CartPole-v1 -n 1000 -f logs --deterministic --gif
 ```
 
-## Current Collection: 100+ Trained Agents!
+## Current Collection: 150+ Trained Agents!
 
 Final performance of the trained agents can be found in [`benchmark.md`](./benchmark.md). To compute them, simply run `python -m utils.benchmark`.
 
@@ -316,22 +320,25 @@ Additional Atari Games (to be completed):
 
 ### Classic Control Environments
 
-|  RL Algo |  CartPole-v1 | MountainCar-v0 | Acrobot-v1 |  Pendulum-v0 | MountainCarContinuous-v0 |
-|----------|--------------|----------------|------------|--------------|--------------------------|
-| A2C      | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: |
-| PPO      | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: |
-| DQN      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | N/A | N/A |
-| QR-DQN   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | N/A | N/A |
+|  RL Algo |  CartPole-v1 | MountainCar-v0 | Acrobot-v1 | Pendulum-v1 | MountainCarContinuous-v0 |
+|----------|--------------|----------------|------------|--------------------|--------------------------|
+| ARS      | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| A2C      | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| PPO      | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| DQN      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | N/A                | N/A |
+| QR-DQN   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | N/A                | N/A |
 | DDPG     |  N/A |  N/A  | N/A | :heavy_check_mark: | :heavy_check_mark: |
 | SAC      |  N/A |  N/A  | N/A | :heavy_check_mark: | :heavy_check_mark: |
 | TD3      |  N/A |  N/A  | N/A | :heavy_check_mark: | :heavy_check_mark: |
 | TQC      |  N/A |  N/A  | N/A | :heavy_check_mark: | :heavy_check_mark: |
+| TRPO     | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 
 
 ### Box2D Environments
 
 |  RL Algo |  BipedalWalker-v3 | LunarLander-v2 | LunarLanderContinuous-v2 |  BipedalWalkerHardcore-v3 | CarRacing-v0 |
 |----------|--------------|----------------|------------|--------------|--------------------------|
+| ARS      |  | :heavy_check_mark: | | :heavy_check_mark: | |
 | A2C      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | |
 | PPO      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | |
 | DQN      | N/A | :heavy_check_mark: | N/A | N/A | N/A |
@@ -340,6 +347,7 @@ Additional Atari Games (to be completed):
 | SAC      | :heavy_check_mark: | N/A | :heavy_check_mark: | :heavy_check_mark: | |
 | TD3      | :heavy_check_mark: | N/A | :heavy_check_mark: | :heavy_check_mark: | |
 | TQC      | :heavy_check_mark: | N/A | :heavy_check_mark: | :heavy_check_mark: | |
+| TRPO     | | :heavy_check_mark: | :heavy_check_mark: | | |
 
 ### PyBullet Environments
 
@@ -350,12 +358,14 @@ Note: those environments are derived from [Roboschool](https://github.com/openai
 
 |  RL Algo |  Walker2D | HalfCheetah | Ant | Reacher |  Hopper | Humanoid |
 |----------|-----------|-------------|-----|---------|---------|----------|
+| ARS      |  |  |  |  |  | |
 | A2C      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | |
 | PPO      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | |
 | DDPG     | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | |
 | SAC      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | |
 | TD3      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | |
 | TQC      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | |
+| TRPO     | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | |
 
 PyBullet Envs (Continued)
 
@@ -372,12 +382,14 @@ PyBullet Envs (Continued)
 
 |  RL Algo |  Walker2d | HalfCheetah | Ant | Swimmer |  Hopper | Humanoid |
 |----------|-----------|-------------|-----|---------|---------|----------|
+| ARS      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: |  |
 | A2C      |  | :heavy_check_mark: |  | :heavy_check_mark: | :heavy_check_mark: | |
 | PPO      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | |
 | DDPG     |  |  |  |  |  | |
 | SAC      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | TD3      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | TQC      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| TRPO      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |  |
 
 ### Robotics Environments
 
