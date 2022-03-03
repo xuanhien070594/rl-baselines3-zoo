@@ -211,7 +211,7 @@ CartPole-continuous-input-v0:
   learning_rate: !!float 0.0008949771423406326
   policy_kwargs: "dict(net_arch=[400, 300])"
 
-Box-Pushing-with-Arm-v0:
+Box-Pushing-with-Arm-v0: &box-pushing-defaults
   n_timesteps: !!float 1e6
   policy: 'MlpPolicy'
   gamma: 0.999
@@ -224,6 +224,15 @@ Box-Pushing-with-Arm-v0:
   train_freq: 128
   learning_rate: !!float 0.0008949771423406326
   policy_kwargs: "dict(net_arch=[400, 300])"
+
+Box-Pushing-with-Arm-low-friction-v0:
+  <<: *box-pushing-defaults
+
+Box-Pushing-with-Arm-med-friction-v0:
+  <<: *box-pushing-defaults
+
+Box-Pushing-with-Arm-high-friction-v0:
+  <<: *box-pushing-defaults
 
 # Inverted-Pendulum-Softwall-v1:
 #   n_timesteps: !!float 5e5
