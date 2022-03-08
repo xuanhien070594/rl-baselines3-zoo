@@ -34,6 +34,7 @@ from stable_baselines3.common.vec_env import (
     VecNormalize,
     VecTransposeImage,
     is_vecenv_wrapped,
+    VecVideoRecorder
 )
 
 # For custom activation fn
@@ -87,6 +88,10 @@ class ExperimentManager(object):
         vec_env_type: str = "dummy",
         n_eval_envs: int = 1,
         no_optim_plots: bool = False,
+        record_videos: bool = False,
+        max_video_length: int = 200,
+        record_video_folder: str = "videos",
+        n_record_videos: int = 10000
     ):
         super(ExperimentManager, self).__init__()
         self.algo = algo
@@ -152,6 +157,12 @@ class ExperimentManager(object):
             self.log_path, f"{self.env_id}_{get_latest_run_id(self.log_path, self.env_id) + 1}{uuid_str}"
         )
         self.params_path = f"{self.save_path}/{self.env_id}"
+
+        # Video recording
+        self.record_videos = record_videos
+        self.max_video_length = max_video_length
+        self.record_video_folder = record_video_folder
+        self.n_record_videos = n_record_videos
 
     def setup_experiment(self) -> Optional[Tuple[BaseAlgorithm, Dict[str, Any]]]:
         """
@@ -528,6 +539,14 @@ class ExperimentManager(object):
         # Wrap the env into a VecNormalize wrapper if needed
         # and load saved statistics when present
         env = self._maybe_normalize(env, eval_env)
+
+        # Wrap the env into a vecvideorecorder if recoding of videos is required
+        if self.record_videos:
+            env = VecVideoRecorder(
+                venv = env,
+                video_folder=self.record_video_folder,
+                record_video_trigger=lambda x: x % self.n_record_videos == 0,
+                video_length=self.max_video_length)
 
         # Optional Frame-stacking
         if self.frame_stack is not None:

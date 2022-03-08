@@ -124,6 +124,15 @@ if __name__ == "__main__":  # noqa: C901
     )
     parser.add_argument("--wandb-project-name", type=str, default="sb3", help="the wandb's project name")
     parser.add_argument("--wandb-entity", type=str, default=None, help="the entity (team) of wandb's project")
+    parser.add_argument(
+        "--record-videos",
+        action="store_true",
+        default=False,
+        help="if toggled, videos of task execution are recorded")
+    parser.add_argument("--max-video-length", type=int, default=200, help="Maximum length of recorded videos")
+    parser.add_argument("--record-video-folder", type=str, default="videos", help="Folder that contains all recorded videos")
+    parser.add_argument("--n-record-videos", type=int, default=10000, help="Frequency of recording video")
+
     args = parser.parse_args()
 
     # Going through custom gym packages to let them register in the global registory
@@ -213,6 +222,10 @@ if __name__ == "__main__":  # noqa: C901
         vec_env_type=args.vec_env,
         n_eval_envs=args.n_eval_envs,
         no_optim_plots=args.no_optim_plots,
+        record_videos=args.record_videos,
+        max_video_length=args.max_video_length,
+        record_video_folder=args.record_video_folder,
+        n_record_videos=args.n_record_videos
     )
 
     # Prepare experiment and launch hyperparameter optimization if needed
