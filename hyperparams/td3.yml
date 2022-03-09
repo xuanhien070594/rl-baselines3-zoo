@@ -156,6 +156,46 @@ Humanoid-v3:
   learning_rate: !!float 3e-4
   batch_size: 256
 
+FetchPush-v1:
+  n_timesteps: !!float 1e6
+  policy: 'MultiInputPolicy'
+  gamma: 0.99
+  buffer_size: 1000000
+  noise_type: 'normal'
+  noise_std: 0.1
+  learning_starts: 10000
+  batch_size: 256
+  learning_rate: !!float 3e-4
+  train_freq: 1
+  gradient_steps: 1
+  replay_buffer_class: HerReplayBuffer
+  replay_buffer_kwargs: "dict(
+    online_sampling=True,
+    goal_selection_strategy='future',
+    n_sampled_goal=4
+  )"
+  policy_kwargs: "dict(net_arch=[400, 300])"
+
+FetchPushForces-v1:
+  n_timesteps: !!float 1e6
+  policy: 'MultiInputPolicy'
+  gamma: 0.99
+  buffer_size: 1000000
+  noise_type: 'normal'
+  noise_std: 0.1
+  learning_starts: 10000
+  batch_size: 256
+  learning_rate: !!float 3e-4
+  train_freq: 1
+  gradient_steps: 1
+  replay_buffer_class: HerReplayBuffer
+  replay_buffer_kwargs: "dict(
+    online_sampling=True,
+    goal_selection_strategy='future',
+    n_sampled_goal=4
+  )"
+  policy_kwargs: "dict(net_arch=[400, 300])"
+
 # Tuned
 Swimmer-v3:
   <<: *mujoco-defaults
@@ -167,19 +207,32 @@ Swimmer-v3:
 
 # Tuned 01/31/2022
 CartPole-Softwalls-v1:
+  # n_timesteps: !!float 5e5
+  # policy: 'MlpPolicy'
+  # gamma: 0.999
+  # buffer_size: 1000000
+  # learning_starts: 0
+  # gradient_steps: 64
+  # batch_size: 1024
+  # noise_type: 'normal'
+  # noise_std: 0.6990451822
+  # tau: 0.08
+  # train_freq: 64
+  # learning_rate: !!float 0.001467701779
+  # policy_kwargs: "dict(net_arch=[64, 64])"
   n_timesteps: !!float 5e5
   policy: 'MlpPolicy'
-  gamma: 0.999
+  gamma: 0.995
   buffer_size: 1000000
   learning_starts: 0
-  gradient_steps: 64
+  gradient_steps: 4
   batch_size: 1024
   noise_type: 'normal'
-  noise_std: 0.6990451822
-  tau: 0.08
-  train_freq: 64
-  learning_rate: !!float 0.001467701779
-  policy_kwargs: "dict(net_arch=[64, 64])"
+  noise_std: 0.7105764619
+  tau: 0.02
+  train_freq: 4
+  learning_rate: !!float 0.0006927145033
+  policy_kwargs: "dict(net_arch=[256, 256])"
 
 # Tuned 01/31/2022
 CartPole-Softwalls-v0:
@@ -197,21 +250,22 @@ CartPole-Softwalls-v0:
   learning_rate: !!float 0.0006927145033
   policy_kwargs: "dict(net_arch=[256, 256])"
 
-CartPole-continuous-input-v0:
+CartPole-No-Walls-v0:
   n_timesteps: !!float 5e5
   policy: 'MlpPolicy'
-  gamma: 0.999
-  buffer_size: 100000
-  learning_starts: 10000
+  gamma: 0.995
+  buffer_size: 1000000
+  learning_starts: 0
+  gradient_steps: 4
+  batch_size: 1024
   noise_type: 'normal'
-  noise_std: 0.3502860017001225
-  batch_size: 256
-  tau: 0.05
-  train_freq: 128
-  learning_rate: !!float 0.0008949771423406326
-  policy_kwargs: "dict(net_arch=[400, 300])"
+  noise_std: 0.7105764619
+  tau: 0.02
+  train_freq: 4
+  learning_rate: !!float 0.0006927145033
+  policy_kwargs: "dict(net_arch=[256, 256])"
 
-Box-Pushing-with-Arm-v0:
+Box-Pushing-with-Arm-v0: &box-pushing-defaults
   n_timesteps: !!float 1e6
   policy: 'MlpPolicy'
   gamma: 0.999
@@ -224,6 +278,15 @@ Box-Pushing-with-Arm-v0:
   train_freq: 128
   learning_rate: !!float 0.0008949771423406326
   policy_kwargs: "dict(net_arch=[400, 300])"
+
+Box-Pushing-with-Arm-full-forces-v0:
+  <<: *box-pushing-defaults
+
+Box-Pushing-with-Arm-ee-forces-v0:
+  <<: *box-pushing-defaults
+
+Box-Pushing-with-Arm-no-forces-v0:
+  <<: *box-pushing-defaults
 
 Inverted-Pendulum-Softwall-v1:
   n_timesteps: !!float 5e5
