@@ -93,13 +93,13 @@ class ExperimentManager:
         vec_env_type: str = "dummy",
         n_eval_envs: int = 1,
         no_optim_plots: bool = False,
+        device: Union[th.device, str] = "auto",
+        yaml_file: Optional[str] = None,
+        show_progress: bool = False,
         record_videos: bool = False,
         max_video_length: int = 200,
         record_video_folder: str = "videos",
         n_record_videos: int = 10000,
-        device: Union[th.device, str] = "auto",
-        yaml_file: Optional[str] = None,
-        show_progress: bool = False,
     ):
         super().__init__()
         self.algo = algo
